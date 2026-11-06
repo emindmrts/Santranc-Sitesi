@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Satranç oyna · santranc.net</title>
+  <meta name="description" content="Reklamsız, üyeliksiz satranç. Bilgisayara karşı ya da aynı ekranda iki kişi oynayın. Şah mat, pat, terfi ve saat desteğiyle tarayıcıda ücretsiz satranç.">
+  <meta name="theme-color" content="#17181c">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Satranç oyna · santranc.net">
+  <meta property="og:description" content="Bilgisayara karşı ya da iki kişi. Reklam yok, üyelik yok.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+  <a class="skip" href="#board">Tahtaya geç</a>
+
+  <header class="site-head">
+    <div class="wrap">
+      <div class="head-card">
+        <div class="promo-banner" id="promoBanner">
+          <p>Stockfish 16 NNUE artık tarayıcıda çalışıyor — Şampiyon seviyesinde oyna.</p>
+          <a href="#oyna">Hemen oyna</a>
+          <button type="button" id="promoClose" aria-label="Duyuruyu kapat">×</button>
+        </div>
+        <div class="head-inner">
+        <a class="brand" href="#oyna" aria-label="santranc.net ana sayfa">
+          <img src="logolar/santrancnetbeyaz.png" alt="santranc.net" width="184" height="24">
+        </a>
+        <nav class="nav" aria-label="Site">
+          <a href="#oyna">Oyna</a>
+          <a href="#nasil-oynanir">Nasıl Oynanır</a>
+          <a href="#kurallar">Kurallar</a>
+        </nav>
+        <div class="head-actions">
+        <button type="button" class="icon-btn" id="soundBtn" aria-pressed="true" aria-label="Sesi kapat" title="Sesi kapat">
+          <svg class="icon-on" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 5 6.5 9H3v6h3.5L11 19z"/>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+            <path d="M18.5 5.8a8.5 8.5 0 0 1 0 12.4"/>
+          </svg>
+          <svg class="icon-off" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 5 6.5 9H3v6h3.5L11 19z"/>
+            <path d="m16 9.5 5 5m0-5-5 5"/>
+          </svg>
+        </button>
+          <button type="button" class="btn btn-light btn-sm" id="newGameTop">Yeni oyun</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="oyna" aria-labelledby="playTitle">
+      <div class="play-head">
+        <h1 id="playTitle">Satranç oyna</h1>
+        <p class="play-tag">Reklam yok · üyelik yok · tarayıcıda çalışır</p>
+      </div>
+
+      <div class="play-body">
+        <div class="board-col">
+          <div class="player" id="barTop">
+            <div class="who">
+              <span class="swatch b" aria-hidden="true"></span>
+              <span class="who-name">Bilgisayar</span>
+              <span class="caps" aria-hidden="true"></span>
+              <span class="lead"></span>
+            </div>
+            <span class="clock">Süresiz</span>
+          </div>
+
+          <div class="board-wrap">
+            <div class="board" id="board" role="group" aria-label="Satranç tahtası"></div>
+
+            <div class="promo" id="promo" hidden>
+              <div class="promo-card" role="dialog" aria-modal="true" aria-labelledby="promoTitle">
+                <p class="promo-title" id="promoTitle">Terfi: hangi taş?</p>
+                <div class="promo-choices" id="promoChoices"></div>
+                <button type="button" class="promo-cancel" id="promoCancel">Vazgeç</button>
+              </div>
+            </div>
+
+            <div class="result" id="result" hidden>
+              <div class="result-card" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+                <p class="result-reason" id="resultReason">Şah mat</p>
+                <h2 id="resultTitle">Kazandın.</h2>
+                <p class="result-sub" id="resultSub"></p>
+                <div class="result-coach" id="resultCoach" hidden>
+                  <div class="result-coach-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span>Yapay Zeka Koç Analizi</span>
+                  </div>
+                  <h4 class="result-coach-head" id="coachHeadline"></h4>
+                  <p class="result-coach-text" id="coachText"></p>
+                  <div class="result-coach-tip" id="coachTip"></div>
+                </div>
+                <div class="result-actions">
+                  <button type="button" class="btn btn-primary" id="resultNew">Yeni oyun</button>
+                  <button type="button" class="btn btn-ghost" id="resultClose">Tahtayı incele</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player" id="barBottom">
+            <div class="who">
+              <span class="swatch w" aria-hidden="true"></span>
+              <span class="who-name">Sen</span>
+              <span class="caps" aria-hidden="true"></span>
+              <span class="lead"></span>
+            </div>
+            <span class="clock">Süresiz</span>
+          </div>
+
+          <div class="game-bar">
+            <div class="status" id="status">
+              <span class="status-dot" aria-hidden="true"></span>
+              <div class="status-text">
+                <p class="status-title" id="statusTitle">Sıra sende</p>
+                <p class="status-sub" id="statusSub">Taş seç, noktalara dokun.</p>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn-ghost" id="undoBtn">Geri al</button>
+              <button type="button" class="btn btn-primary" id="hintBtn" title="En iyi hamleyi tahtada göster">İpucu</button>
+              <button type="button" class="btn btn-ghost" id="flipBtn">Tahtayı çevir</button>
+              <button type="button" class="btn btn-ghost btn-danger" id="resignBtn">İstifa</button>
+            </div>
+          </div>
+          <p class="sr-only" id="announcer" aria-live="polite"></p>
+        </div>
+
+        <div class="console">
+          <div class="field qs-field">
+            <div class="seg" role="group" aria-label="Süre" id="timeSeg">
+              <button type="button" class="quick-start-button" data-value="60" aria-pressed="false">
+                <div class="game-info-group">
+                  <h3 class="game-type-label">Bullet</h3>
+                  <div class="quick-start-icon-wrap">
+                    <img src="/imgs/quick_start_bullet.png" class="quick-start-icon quick-start-asset-floating" alt="" width="76" height="80">
+                  </div>
+                  <p class="time-info">1<span class="time-text"> min</span></p>
+                </div>
+              </button>
+              <button type="button" class="quick-start-button" data-value="180" aria-pressed="true">
+                <div class="game-info-group">
+                  <h3 class="game-type-label">Blitz</h3>
+                  <div class="quick-start-icon-wrap">
+                    <img src="/imgs/quick_start_blitz.png" class="quick-start-icon quick-start-asset-floating" alt="" width="76" height="80">
+                  </div>
+                  <p class="time-info">3<span class="time-text">+2s</span></p>
+                </div>
+              </button>
+              <button type="button" class="quick-start-button" data-value="900" aria-pressed="false">
+                <div class="game-info-group">
+                  <h3 class="game-type-label">Rapid</h3>
+                  <div class="quick-start-icon-wrap">
+                    <img src="/imgs/quick_start_rapid.png" class="quick-start-icon quick-start-asset-floating" alt="" width="76" height="80">
+                  </div>
+                  <p class="time-info">15<span class="time-text"> min</span></p>
+                </div>
+              </button>
+              <button type="button" class="quick-start-button" data-value="1800" aria-pressed="false">
+                <div class="game-info-group">
+                  <h3 class="game-type-label">Classic</h3>
+                  <div class="quick-start-icon-wrap">
+                    <img src="/imgs/quick_start_classic.png" class="quick-start-icon quick-start-asset-floating" alt="" width="76" height="80">
+                  </div>
+                  <p class="time-info">30<span class="time-text"> min</span></p>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3 class="panel-title">Oyun kur</h3>
+            <p class="panel-sub">Değişiklik yeni bir oyunla başlar</p>
+            <div class="settings">
+              <div class="field">
+                <span class="field-label" id="modeLabel">Rakip</span>
+                <div class="seg" role="group" aria-labelledby="modeLabel" id="modeSeg">
+                  <button type="button" data-value="ai" aria-pressed="true">Bilgisayar</button>
+                  <button type="button" data-value="duo" aria-pressed="false">İki oyuncu</button>
+                </div>
+              </div>
+
+              <div class="field" data-when="ai">
+                <span class="field-label" id="sideLabel">Taraf</span>
+                <div class="seg" role="group" aria-labelledby="sideLabel" id="sideSeg">
+                  <button type="button" data-value="w" aria-pressed="true">Beyaz</button>
+                  <button type="button" data-value="b" aria-pressed="false">Siyah</button>
+                </div>
+              </div>
+
+              <div class="field" data-when="ai" data-wide>
+                <span class="field-label" id="levelLabel">Zorluk</span>
+                <div class="seg" role="group" aria-labelledby="levelLabel" id="levelSeg">
+                  <button type="button" data-value="cirak" aria-pressed="false" title="Stockfish Elo ~1350">Çırak</button>
+                  <button type="button" data-value="kulup" aria-pressed="true" title="Stockfish Elo ~1900">Kulüp</button>
+                  <button type="button" data-value="usta" aria-pressed="false" title="Stockfish Elo ~2600">Usta</button>
+                  <button type="button" data-value="sampiyon" aria-pressed="false" title="Stockfish tam güç (~3500)">Şampiyon</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sheet">
+            <div class="sheet-head">
+              <h2>Hamleler</h2>
+              <div class="sheet-tools">
+                <button type="button" class="chip-btn" id="fenCopyBtn" title="FEN kopyala">FEN</button>
+                <button type="button" class="chip-btn" id="pgnCopyBtn" title="PGN kopyala">PGN</button>
+                <span class="sheet-count" id="moveCount">0 hamle</span>
+              </div>
+            </div>
+            <div class="moves" id="moves">
+              <p class="moves-empty">Henüz hamle yok. İlk taşı sen oynat.</p>
+            </div>
+            <div class="sheet-foot" id="historyBar" hidden>
+              <span id="historyLabel">—</span>
+              <button type="button" class="text-btn" id="historyBackBtn">Sıraya dön</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="how" id="nasil-oynanir" aria-labelledby="howTitle">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="howTitle">Tahta başında üç adım</h2>
+          <p>Kurulum yok, hesap yok. Sayfayı açar açmaz oyun hazır; ayarları istediğin an değiştirebilirsin.</p>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="step-no" aria-hidden="true">01</span>
+            <h3>Tarafını seç</h3>
+            <p>Bilgisayara karşı oynayın ya da iki kişi aynı ekranı paylaşın. Zorluğu, tarafı ve süreyi seçin.</p>
+          </li>
+          <li>
+            <span class="step-no" aria-hidden="true">02</span>
+            <h3>Taşı oynat</h3>
+            <p>Taşa dokunun, kurala uygun kareler işaretlenir. Piyon son sıraya ulaşınca terfi eder.</p>
+          </li>
+          <li>
+            <span class="step-no" aria-hidden="true">03</span>
+            <h3>Oyunu bitir</h3>
+            <p>Şah mat, pat ya da süre bitimi. Sonuç tahtada görünür; rövanş tek tık uzakta.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="fame" aria-labelledby="fameTitle">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="fameTitle">Klasik oyunlar</h2>
+          <p>Satranç tarihinin efsane anları. Bir pozisyon seç, tahtaya yüklensin; devamını sen oynat.</p>
+        </div>
+        <div class="fame-grid">
+          <button type="button" class="fame-card" data-load-fen="4kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR4 w - - 0 13" data-title="Opera partisi">
+            <div class="fc-row"><span class="fc-name">Morphy</span><span class="fc-year">1858</span></div>
+            <div class="mini" data-fen="4kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR4 w - - 0 13" aria-hidden="true"></div>
+            <div class="fc-row"><span class="fc-name">Dük Karl &amp; Isouard</span><span class="fc-title">Opera partisi</span></div>
+          </button>
+          <button type="button" class="fame-card" data-load-fen="r3k1nr/p2p1ppp/5n2/1pbn1N1P/4PBP1/3P1Q2/PqP5/R4KR1 w kq - 0 18" data-title="Ölümsüz oyun">
+            <div class="fc-row"><span class="fc-name">Anderssen</span><span class="fc-year">1851</span></div>
+            <div class="mini" data-fen="r3k1nr/p2p1ppp/5n2/1pbn1N1P/4PBP1/3P1Q2/PqP5/R4KR1 w kq - 0 18" aria-hidden="true"></div>
+            <div class="fc-row"><span class="fc-name">Kieseritzky</span><span class="fc-title">Ölümsüz oyun</span></div>
+          </button>
+          <button type="button" class="fame-card" data-load-fen="r1bqkbnr/ppp2ppp/2np4/4p3/2B1P1b1/2N2N2/PPPPPPPP/RN1QK2R w KQkq - 4 5" data-title="Legal matı">
+            <div class="fc-row"><span class="fc-name">Legall</span><span class="fc-year">1750</span></div>
+            <div class="mini" data-fen="r1bqkbnr/ppp2ppp/2np4/4p3/2B1P1b1/2N2N2/PPPPPPPP/RN1QK2R w KQkq - 4 5" aria-hidden="true"></div>
+            <div class="fc-row"><span class="fc-name">Saint-Brie</span><span class="fc-title">Legal matı</span></div>
+          </button>
+          <button type="button" class="fame-card" data-load-fen="rnb1kb1r/pp3ppp/2p5/4q3/4n3/3Q4/PPPB1PPP/2KR1BNR w kq - 0 9" data-title="Réti–Tartakower vezir fedası">
+            <div class="fc-row"><span class="fc-name">Réti</span><span class="fc-year">1910</span></div>
+            <div class="mini" data-fen="rnb1kb1r/pp3ppp/2p5/4q3/4n3/3Q4/PPPB1PPP/2KR1BNR w kq - 0 9" aria-hidden="true"></div>
+            <div class="fc-row"><span class="fc-name">Tartakower</span><span class="fc-title">Vezir fedası</span></div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="rules" id="kurallar" aria-labelledby="rulesTitle">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="rulesTitle">Taşlar ve harfleri</h2>
+          <p>Türkçe notasyonda her taşın bir harfi vardır. Hamle listesini okurken bu harflerle karşılaşacaksın.</p>
+        </div>
+
+        <ul class="pieces">
+          <li>
+            <span class="chip"><svg class="piece white" viewBox="0 0 45 45" aria-hidden="true"><use href="#p-k"></use></svg></span>
+            <div>
+              <h3>Şah <span class="letter">Ş</span></h3>
+              <p>Bir kare, her yöne. Şah tehdit altındaysa sıradaki hamle onu kurtarmak zorunda.</p>
+            </div>
+          </li>
+          <li>
+            <span class="chip"><svg class="piece white" viewBox="0 0 45 45" aria-hidden="true"><use href="#p-q"></use></svg></span>
+            <div>
+              <h3>Vezir <span class="letter">V</span></h3>
+              <p>Yatay, dikey ve çaprazda istediği kadar ilerler. Tahtanın en güçlü taşı.</p>
+            </div>
+          </li>
+          <li>
+            <span class="chip"><svg class="piece white" viewBox="0 0 45 45" aria-hidden="true"><use href="#p-r"></use></svg></span>
+            <div>
+              <h3>Kale <span class="letter">K</span></h3>
+              <p>Yatay ve dikeyde sınırsız ilerler. Açık dikeylerde oyunu belirler.</p>
+            </div>
+          </li>
+          <li>
+            <span class="chip"><svg class="piece white" viewBox="0 0 45 45" aria-hidden="true"><use href="#p-b"></use></svg></span>
+            <div>
+              <h3>Fil <span class="letter">F</span></h3>
+              <p>Yalnızca çaprazda ilerler; açıldığı rengin dışına çıkmaz.</p>
+            </div>
+          </li>
+          <li>
+            <span class="chip"><svg class="piece white" viewBox="0 0 45 45" aria-hidden="true"><use href="#p-n"></use></svg></span>
+            <div>
+              <h3>At <span class="letter">A</span></h3>
+              <p>L şeklinde atlar, önündeki taşlardan etkilenmez. Sekiz kareden birine gidebilir.</p>
+            </div>
+          </li>
+          <li>
+            <span class="chip"><svg class="piece white" viewBox="0 0 45 45" aria-hidden="true"><use href="#p-p"></use></svg></span>
+            <div>
+              <h3>Piyon <span class="letter none">—</span></h3>
+              <p>İleri bir kare, ilk hamlede iki. Çaprazda yer ve son sırada terfi eder.</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="special">
+          <article>
+            <h3>Rok</h3>
+            <p>Şah ve kale birlikte hamle yapar; şah iki kare ilerler. Şah tehdit altında olamaz, aradaki kareler boş olmalı.</p>
+          </article>
+          <article>
+            <h3>Geçiş piyonu</h3>
+            <p>Piyon iki kare ilerlerken yanından geçen rakip piyonu, hemen bir sonraki hamlede çaprazdan alabilirsin.</p>
+          </article>
+          <article>
+            <h3>Terfi</h3>
+            <p>Son sıraya ulaşan piyon; vezir, kale, fil ya da at olur. Genellikle vezir seçilir.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="footer-container">
+    <div class="title">Satrancın Geleceği</div>
+    <div class="title">burada başlıyor</div>
+    <button type="button" id="newGameCta">HEMEN OYNA</button>
+    <div class="board-wrapper">
+      <img class="footer-board" src="/img/footer-board-white.png" alt="Satranç tahtası">
+      <img class="knight select-none knight-absolute" src="/img/home-knight.png" draggable="false" alt="Satranç atı">
+    </div>
+
+    <footer>
+      <div class="foot-grid">
+        <div class="foot-brand-col">
+          <div class="logo-container">
+            <img src="logolar/santrancnetsiyah.png" alt="santranc.net" width="180" height="24" class="foot-logo-img">
+          </div>
+          <p class="foot-brand-desc">
+            Tarayıcıda satranç. Reklam yok, üyelik yok, kurulum yok. Doğrudan cihazınızda çalışan Stockfish 16 NNUE ile en saf satranç deneyimi.
+          </p>
+          <div class="foot-pills">
+            <span class="foot-pill"><span class="foot-dot"></span>Stockfish 16 NNUE</span>
+            <span class="foot-pill">GPLv3 Açık Kaynak</span>
+            <span class="foot-pill">Kurulum Gerekmez</span>
+          </div>
+        </div>
+        <div>
+          <h3 class="foot-heading">Menü</h3>
+          <ul class="foot-links">
+            <li><a href="#oyna">Satranç Oyna</a></li>
+            <li><a href="#nasil-oynanir">Nasıl Oynanır</a></li>
+            <li><a href="#kurallar">Taş Kuralları</a></li>
+            <li><a href="#fameTitle">Tarihi Oyunlar</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="foot-heading">Özellikler</h3>
+          <ul class="foot-links">
+            <li><a href="#oyna">Bilgisayara Karşı</a></li>
+            <li><a href="#oyna">İki Kişilik (Aynı Cihaz)</a></li>
+            <li><a href="#oyna">FEN &amp; PGN Dışa Aktar</a></li>
+            <li><a href="#oyna">Zaman Kontrolleri</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="foot-heading">Motor &amp; Proje</h3>
+          <ul class="foot-links">
+            <li><a href="https://stockfishchess.org" target="_blank" rel="noopener noreferrer">Stockfish 16 WASM</a></li>
+            <li><a href="https://github.com/niklasf/stockfish.js" target="_blank" rel="noopener noreferrer">Stockfish.js (GitHub)</a></li>
+            <li><a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer">GPLv3 Lisansı</a></li>
+            <li><a href="#kurallar">Satranç Notasyonu</a></li>
+          </ul>
+        </div>
+        <div class="foot-newsletter">
+          <h3 class="foot-heading">Bültenimize katılın</h3>
+          <p>Yeni oyun modları, analiz özellikleri ve satranç araçlarından ilk siz haberdar olun.</p>
+          <form id="newsletterForm">
+            <input type="email" placeholder="E-posta adresinizi girin" required>
+            <button type="submit">Abone Ol</button>
+          </form>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div>© 2026 santranc.net · Reklamsız, ücretsiz ve açık kaynak</div>
+        <div class="foot-emin-inline">
+          <img src="logolar/logoemin.png" alt="Emin" width="115" height="17" class="foot-emin-logo">
+        </div>
+        <div class="foot-bottom-links">
+          <a href="#kurallar">Oyun Kuralları</a>
+          <a href="#gizlilik" id="privacyLink">Gizlilik Politikası</a>
+          <a href="#sartlar" id="termsLink">Kullanım Koşulları</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <svg class="sprite" aria-hidden="true" focusable="false" style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;">
+    <symbol id="p-p" viewBox="0 0 45 45">
+      <g fill="var(--pf)" stroke="var(--ps)" stroke-width="1.5" stroke-linejoin="round">
+        <circle cx="22.5" cy="12.4" r="5.2"></circle>
+        <path d="M19.2 18.2h6.6c.2 3 1.3 5.6 3.3 8 1.6 1.9 2.4 3.7 2.4 5.5v4.5H13.5v-4.5c0-1.8.8-3.6 2.4-5.5 2-2.4 3.1-5 3.3-8z"></path>
+        <rect x="11.5" y="36.2" width="22" height="4.8" rx="1.3"></rect>
+      </g>
+    </symbol>
+    <symbol id="p-r" viewBox="0 0 45 45">
+      <g fill="var(--pf)" stroke="var(--ps)" stroke-width="1.5" stroke-linejoin="round">
+        <path d="M12.6 10h5.1v3.7h3.6V10h2.4v3.7h3.6V10h5.1v8.3H12.6z"></path>
+        <path d="M15.2 18.3h14.6l2.1 17.9H13.1z"></path>
+        <rect x="11.5" y="36.2" width="22" height="4.8" rx="1.3"></rect>
+      </g>
+      <path d="M16 21.4h13M15.6 24.4h13.8" fill="none" stroke="var(--pd)" stroke-width="1.2" stroke-linecap="round" opacity=".55"></path>
+    </symbol>
+    <symbol id="p-b" viewBox="0 0 45 45">
+      <g fill="var(--pf)" stroke="var(--ps)" stroke-width="1.5" stroke-linejoin="round">
+        <circle cx="22.5" cy="6.9" r="2.4"></circle>
+        <path d="M22.5 9.3c2.8 2.5 6.2 4.7 6.2 9.3 0 3.1-1.7 5.3-3.5 7.1h-5.4c-1.8-1.8-3.5-4-3.5-7.1 0-4.6 3.4-6.8 6.2-9.3z"></path>
+        <rect x="15.9" y="25.2" width="13.2" height="3.1" rx="1"></rect>
+        <path d="M17.6 28.3h9.8l2.5 7.9H15.1z"></path>
+        <rect x="11.5" y="36.2" width="22" height="4.8" rx="1.3"></rect>
+      </g>
+      <path d="m25.6 14.4-3.4 3.4" fill="none" stroke="var(--pd)" stroke-width="1.7" stroke-linecap="round"></path>
+    </symbol>
+    <symbol id="p-q" viewBox="0 0 45 45">
+      <g fill="var(--pf)" stroke="var(--ps)" stroke-width="1.5" stroke-linejoin="round">
+        <path d="M10.8 25.3 12 12l2.4 8.5L17.2 10l2.6 10.5L22.5 8l2.7 12.5L27.8 10l2.8 10.5L33 12l1.2 13.3z"></path>
+        <circle cx="12" cy="11.4" r="1.7"></circle>
+        <circle cx="17.2" cy="9.4" r="1.7"></circle>
+        <circle cx="22.5" cy="7.4" r="1.7"></circle>
+        <circle cx="27.8" cy="9.4" r="1.7"></circle>
+        <circle cx="33" cy="11.4" r="1.7"></circle>
+        <rect x="14.4" y="25.1" width="16.2" height="3.2" rx=".9"></rect>
+        <path d="M17.1 28.3h10.8c.3 3 1.4 5.6 3.2 7.9H13.9c1.8-2.3 2.9-4.9 3.2-7.9z"></path>
+        <rect x="11.5" y="36.2" width="22" height="4.8" rx="1.3"></rect>
+      </g>
+    </symbol>
+    <symbol id="p-k" viewBox="0 0 45 45">
+      <g fill="var(--pf)" stroke="var(--ps)" stroke-width="1.5" stroke-linejoin="round">
+        <path d="M21.3 4.4h2.4v3.2h3.1v2.3h-3.1v3.2h-2.4V9.9h-3.1V7.6h3.1z"></path>
+        <path d="M22.5 12.7c-4.4 0-7.9 2.7-7.9 6.2 0 2.3 1.2 3.8 2.6 5.4h10.6c1.4-1.6 2.6-3.1 2.6-5.4 0-3.5-3.5-6.2-7.9-6.2z"></path>
+        <rect x="14.6" y="24.1" width="15.8" height="3.2" rx=".9"></rect>
+        <path d="M17.3 27.3h10.4c.3 3.3 1.5 6 3.4 8.9H13.9c1.9-2.9 3.1-5.6 3.4-8.9z"></path>
+        <rect x="11.5" y="36.2" width="22" height="4.8" rx="1.3"></rect>
+      </g>
+      <path d="M15.4 19.4c1.5-1.5 4.1-2.4 7.1-2.4s5.6.9 7.1 2.4" fill="none" stroke="var(--pd)" stroke-width="1.2" stroke-linecap="round" opacity=".5"></path>
+    </symbol>
+    <symbol id="p-n" viewBox="0 0 45 45">
+      <g fill="var(--pf)" stroke="var(--ps)" stroke-width="1.5" stroke-linejoin="round">
+        <path d="M14.5 36.2V30C14.5 27.5 15.4 25.6 17.2 24L19 21.8C16.8 20.6 15.2 18.6 14.6 16.2L14 13.6C13.6 12 14.8 10.6 16.4 10.3L21 9.4L23.4 5L25.5 8.6L28 4L29.2 10.8C31.9 13.3 33.6 17 33.6 21.6V36.2z"></path>
+        <rect x="11.5" y="36.2" width="22" height="4.8" rx="1.3"></rect>
+      </g>
+      <circle cx="19.6" cy="15.4" r="1.15" fill="var(--pd)"></circle>
+      <circle cx="16.3" cy="17.6" r=".8" fill="var(--pd)" opacity=".65"></circle>
+      <path d="M29.4 17.6c.4 4.9-.5 9-1.5 13.6" fill="none" stroke="var(--pd)" stroke-width="1.1" stroke-linecap="round" opacity=".5"></path>
+    </symbol>
+
+  </svg>
+
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
